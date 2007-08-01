@@ -4,6 +4,8 @@ MANIFEST
 Makefile.PL
 README
 lib/WWW/Sitebase.pm
+lib/WWW/Sitebase/Navigator.pm
+lib/WWW/Sitebase/Poster.pm
 t/00-load.t
 t/boilerplate.t
 t/pod-coverage.t
