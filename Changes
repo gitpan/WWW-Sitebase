@@ -1,0 +1,36 @@
+Revision history for WWW-SiteBase
+
+0.02    2006-10-01
+        - get_page now returns undef if it can't get the page or
+          if the page doesn't match the provided RE after retrying
+          20 times.
+        - Added follow_to and follow_link methods.
+        - _go_home method now goes to site's homepage if not
+          logged in.
+        - Fixed bugs in submit_form and _get_home.
+        - Added debug method.
+        - Cleaned Bebo-specific code from Base.pm
+        - Changed "site" method name to "browser" in SiteBase.pm and
+          Base.pm
+        - Added Poster.pm (needs debugging).
+        - Debugged Poster.pm. :)
+        - Fixed max_count bug in Poster.pm (0.2).
+        - Added post_count method to Poster.pm (0.3)
+        - Renamed Sitebase::Base -> Sitebase.
+        - Renamed Sitebase -> Sitebase::Navigator.
+          - Structure now is:
+            - Sitebase contains basic param validation, etc. It really
+              could be used for almost any module.
+            - Sitebase::Navigator is the base class for navigating
+              web sites
+            - Sitebase::Poster is an iterator for calling a posting method
+              and remembering who was posted to.
+        - Fixed documentation and package names
+        - Updated Changes file with previous changes.
+
+0.01    2006-09-30
+        First version.
+        Includes WWW::SiteBase and WWW::SIteBase::Base, which
+        is my general base class with handy generic parsing and
+        load/save methods and should probably be renamed to
+        "BaseClass" or something.
