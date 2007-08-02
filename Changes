@@ -1,6 +1,9 @@
-Revision history for WWW-SiteBase
+Revision history for WWW::Sitebase
 
-0.03    2007-07-03
+0.04    2007-08-02
+        - Fixed capitalization of Sitebase module name.
+
+0.03    2007-07-31
         - Corrected version 0.02 release date
         - Added "login_form_no" and "login_form_name" fields to site_info hash.
           This fixes an obvious bug in which logins would fail if the login form
@@ -20,7 +23,7 @@ Revision history for WWW-SiteBase
         - Fixed bugs in submit_form and _get_home.
         - Added debug method.
         - Cleaned Bebo-specific code from Base.pm
-        - Changed "site" method name to "browser" in SiteBase.pm and
+        - Changed "site" method name to "browser" in Sitebase.pm and
           Base.pm
         - Added Poster.pm (needs debugging).
         - Debugged Poster.pm. :)
@@ -40,7 +43,7 @@ Revision history for WWW-SiteBase
 
 0.01    2006-09-30
         First version.
-        Includes WWW::SiteBase and WWW::SIteBase::Base, which
+        Includes WWW::Sitebase and WWW::Sitebase::Base, which
         is my general base class with handy generic parsing and
         load/save methods and should probably be renamed to
         "BaseClass" or something.

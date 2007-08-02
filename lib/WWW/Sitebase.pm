@@ -1,4 +1,4 @@
-# $Id: Sitebase.pm,v 1.4 2007/08/01 05:54:32 grant Exp $
+# $Id: Sitebase.pm,v 1.5 2007/08/02 09:10:13 grant Exp $
 
 package WWW::Sitebase;
 
@@ -14,11 +14,11 @@ WWW::Sitebase - Base class for Perl modules
 
 =head1 VERSION
 
-Version 0.3
+Version 0.4
 
 =cut
 
-our $VERSION = '0.3';
+our $VERSION = '0.4';
 
 =head1 SYNOPSIS
 

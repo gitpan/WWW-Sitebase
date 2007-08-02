@@ -1,4 +1,4 @@
-# $Id: Poster.pm,v 1.4 2007/07/25 19:19:04 grant Exp $
+# $Id: Poster.pm,v 1.5 2007/08/02 09:06:25 grant Exp $
 
 package WWW::Sitebase::Poster;
 
@@ -888,7 +888,7 @@ your bug as I make changes.
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc WWW::SiteBase::Poster
+    perldoc WWW::Sitebase::Poster
 
 You can also look for information at:
 

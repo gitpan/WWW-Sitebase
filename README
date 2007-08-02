@@ -1,4 +1,4 @@
-WWW-SiteBase
+WWW::Sitebase
 
 This module is a base class for modules that navigate web sites
 like Myspace or Bebo.  It provides basic methods like
@@ -19,21 +19,21 @@ SUPPORT AND DOCUMENTATION
 
 After installing, you can find documentation for this module with the perldoc command.
 
-    perldoc WWW::SiteBase
+    perldoc WWW::Sitebase
 
 You can also look for information at:
 
     Search CPAN
-        http://search.cpan.org/dist/WWW-SiteBase
+        http://search.cpan.org/dist/WWW-Sitebase
 
     CPAN Request Tracker:
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=WWW-SiteBase
+        http://rt.cpan.org/NoAuth/Bugs.html?Dist=WWW-Sitebase
 
     AnnoCPAN, annotated CPAN documentation:
-        http://annocpan.org/dist/WWW-SiteBase
+        http://annocpan.org/dist/WWW-Sitebase
 
     CPAN Ratings:
-        http://cpanratings.perl.org/d/WWW-SiteBase
+        http://cpanratings.perl.org/d/WWW-Sitebase
 
 COPYRIGHT AND LICENCE
 

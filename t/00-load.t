@@ -3,7 +3,7 @@
 use Test::More tests => 1;
 
 BEGIN {
-	use_ok( 'WWW::SiteBase' );
+	use_ok( 'WWW::Sitebase' );
 }
 
-diag( "Testing WWW::SiteBase $WWW::SiteBase::VERSION, Perl $], $^X" );
+diag( "Testing WWW::Sitebase $WWW::Sitebase::VERSION, Perl $], $^X" );
