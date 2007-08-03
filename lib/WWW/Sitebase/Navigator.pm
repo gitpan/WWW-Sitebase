@@ -13,11 +13,11 @@ WWW::Sitebase::Navigator - Base class for modules that navigate web sites
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 =head1 SYNOPSIS
 
@@ -77,6 +77,12 @@ version of an overridden method.
             # This is meant for IIS and ColdFusion-based sites that
             # periodically spew error messages that go away when tried again.
     };
+
+IMPORTANT:  If the site your module navigates uses ANY SSL, you'll
+need to add "Crypt::SSLEay" to your list of prerequisite modules.  Otherwise
+your methods will die if they hit an SSL-encrypted page.
+WWW::Sitebase::Navigator doesn't require this for you to prevent unnecessary
+overhead for sites that don't need it.
 
 =cut
 

@@ -1,5 +1,10 @@
 Revision history for WWW::Sitebase
 
+0.05    2007-08-03
+        - Added prerequisites to Makefile.PL
+        - Updated Navigator docs to mention adding Crypt::SSLEay for
+          subclasses that navigate SSL pages.
+
 0.04    2007-08-02
         - Fixed capitalization of Sitebase module name.
 
