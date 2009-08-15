@@ -13,11 +13,11 @@ WWW::Sitebase::Navigator - Base class for modules that navigate web sites
 
 =head1 VERSION
 
-Version 0.04
+Version 0.05
 
 =cut
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 =head1 SYNOPSIS
 
@@ -113,42 +113,44 @@ These are parsed by Params::Validate.  In breif, setting an
 option to "0" means it's optional, "1" means it's required.
 See Params::Validate for more info.
 
- sub default_options {
-     super;
-     $self->{default_options}->{my_option1} = 0;
-     $self->{default_options}->{my_option2} = 0;
+    sub default_options {
+        $self->{default_options}={
+            account_name => 0,
+            password => 0,
+            cache_dir => 0,  # Default set by site_info field method
+            cache_file => 0, # Default set by field method below
+            auto_login => 0, # Default set by field method below
+            human => 0,      # Default set by field method below
+            config_file => 0
+        };
 
-     # Make account_name mandatory
-     $self->{default_options}->{account_name} = 1;
- }
+        return $self->{default_options};
+    }
 
- # To completely change the options, do this instead:
- const default_options => {
-    account_name => 1,  # Make account and password mandatory
-    password => 1,
- }
+    # So to add a "questions" option that's mandatory:
 
-In the second example above, the user would be required to provide
-an account_name and password, but would not be able to specify
-any other options to the "new" method, although they'll still
-be settable via the accessor methods discussed below.
-
-Note that the second example is dangerous, since there are certain
-fields required by WWW::Sitebase::Navigator (i.e. the ones in
-default_options), so you'll probably want those, and you'll probably
-also want to allow any new options added in the future.
+    sub default_options {
+        super;
+        $self->{default_options}->{questions}=1;
+        return $self->{default_options};
+    }
 
 =cut
 
 # Options they can pass via hash or hashref.
-const default_options => {
-    account_name => 0,
-    password => 0,
-    cache_dir => 0,  # Default set by site_info field method
-    cache_file => 0, # Default set by field method below
-    auto_login => 0, # Default set by field method below
-    human => 0,      # Default set by field method below
-};
+sub default_options {
+    $self->{default_options}={
+        account_name => 0,
+        password => 0,
+        cache_dir => 0,  # Default set by site_info field method
+        cache_file => 0, # Default set by field method below
+        auto_login => 0, # Default set by field method below
+        human => 0,      # Default set by field method below
+        config_file => 0
+    };
+    
+    return $self->{default_options};
+}
 
 =head2 positional_parameters
 
@@ -400,7 +402,7 @@ sub site_login {
 
     # Verify we're logged in
     if ( ( ! $verify_re ) ||
-         ( $self->current_page->content =~ /$verify_re/si )
+         ( $self->current_page->decoded_content =~ /$verify_re/si )
        ) {
         $self->logged_in( 1 );
     } else {
@@ -522,7 +524,7 @@ sub _check_login {
     # Check for the "proper" error response, or just look for the
     # error message on the page.
     $re = $self->site_info->{'not_logged_in_re'};
-    if ( ( $res->is_error == 403 ) || ( $res->content =~ /$re/is ) ) {
+    if ( ( $res->is_error == 403 ) || ( $res->decoded_content =~ /$re/is ) ) {
         if ( $res->is_error ) {
             warn "Error: " . $res->is_error . "\n"
         } else {
@@ -784,9 +786,9 @@ EXAMPLE
     # The following displays the HTML source of MySpace.com's home
     # page, verifying that there is evidence of a login form on the
     # retreived page.
-    my $res=get_page( "http://www.myspace.com/", 'E-Mail:.*?Password:' );
+    my $res=get_page( "http://www.myspace.com/", re => 'E-Mail:.*?Password:' );
     
-    print $res->content;
+    print $res->decoded_content;
 
 =cut
 
@@ -970,7 +972,7 @@ sub _page_ok {
     elsif ( $res->is_success ) {
 
         # Page loaded, but make sure it isn't an error page.
-        $page = $res->content; # Get the content
+        $page = $res->decoded_content; # Get the content
         $page =~ s/[ \t\n\r]+/ /g; # Strip whitespace
 
         # If they gave us a RE with which to verify the page, look for it.
@@ -1049,8 +1051,8 @@ the current page ( $site->current_page ) is used.
 
 "form_no" is used to numerically identify the form on the page. It's a
 simple counter starting from 1.  If there are 3 forms on the page and
-you want to fill in and submit the second form, set "form_no => 1".
-For the first form, use "form_no => 0".
+you want to fill in and submit the second form, set "form_no => 2".
+For the first form, use "form_no => 1".
 
 "form_name" is used to indentify the form by name.  In actuality,
 submit_form simply uses "form_name" to iterate through the forms

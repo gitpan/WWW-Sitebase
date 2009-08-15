@@ -1,4 +1,4 @@
-# $Id: Sitebase.pm,v 1.6 2007/08/03 08:39:01 grant Exp $
+# $Id: Sitebase.pm,v 1.10 2009/08/10 09:28:39 grant Exp $
 
 package WWW::Sitebase;
 
@@ -14,11 +14,11 @@ WWW::Sitebase - Base class for Perl modules
 
 =head1 VERSION
 
-Version 0.5
+Version 0.9
 
 =cut
 
-our $VERSION = '0.5';
+our $VERSION = '0.9';
 
 =head1 SYNOPSIS
 
@@ -82,14 +82,22 @@ values.  The format is such that it can be passed to Params::Validate
 (and, well it is :).
 
 You MUST override this method to return your default options.
-Fortunately we use Spiffy, so you just have
-to do this:
+Basically, you just have to do this:
 
- const default_options => {
- 		option => { default => value },
- 		option => { default => value },
- };
+ sub default_options {
  
+    $self->{default_options}={
+ 		option => { default => value },
+ 		option => { default => value },
+    };
+    
+    return $self->{default_options};
+
+ }
+
+The approach above lets your subclasses add more options if they need to.
+it also sets the default_options parameter, and returns it so that
+you can call $self->default_options instead of $self->{default_options}.
 
 =cut
 
@@ -253,13 +261,13 @@ sub parse_options {
 
 	# figure out the format
 	# - new( $options_hashref )
-	if ( ( @_ == 1 ) && ( ref $_[0] eq 'HASH') ) {
+    if ( ( @_ == 1 ) && ( ref $_[0] eq 'HASH') ) {
 		%options = %{ $_[0] };
 	# - new( %options )
 	#   If more than 1 argument, and an even number of arguments, and
 	#   the first argument is one of our known options.
 	} elsif ( ( @_ > 1 ) && ( @_ % 2 == 0 ) &&
-		( defined( $self->default_options->{$_[0]} ) ) ) {
+		( defined( $self->default_options->{ "$_[0]" } ) ) ) {
 		%options = ( @_ );
 	# - new( @options )
 	#   We just assign them in order.
@@ -328,6 +336,7 @@ positional_parameters methods.
 
 sub save {
 
+    my $filename = shift;
 	my $data = {};
 
 	# For each field listed as persistent, store it in the
@@ -343,7 +352,7 @@ sub save {
 		}
 	}
 
-	DumpFile( $data );
+	DumpFile( $filename, $data );
 
 }
 

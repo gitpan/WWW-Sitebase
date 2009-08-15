@@ -1,5 +1,24 @@
 Revision history for WWW::Sitebase
 
+0.09    2009-08-10
+        - Improved handling of default_options to allow sub-classes
+          more flexibility and backwards-compatibility when
+          adding options.
+
+0.08    2009-08-10
+        - Fixed handling and documentation of default_options
+        - Fixed bug in Sitebase::save method to make it work as
+          documented
+
+0.07    2009-08-08
+        - Updated Navigor to use decoded_content instead of content method
+          when checking pages for regular expressions. This solves
+          problems that can occur when scanning pages with UTF-8
+          encoding.
+
+0.06    2007-08-04
+        - Added use tests for Navigator and Poster in 01-load.t
+
 0.05    2007-08-03
         - Added prerequisites to Makefile.PL
         - Updated Navigator docs to mention adding Crypt::SSLEay for

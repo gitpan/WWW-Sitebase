@@ -16,11 +16,11 @@ WWW::Sitebase::Poster - Base class for web site posting routines
 
 =head1 VERSION
 
-Version 0.3
+Version 0.4
 
 =cut
 
-our $VERSION = '0.3';
+our $VERSION = '0.4';
 
 =head1 SYNOPSIS
 
@@ -138,18 +138,55 @@ using.
 
 =cut
 
-const default_options => {
+=head2 default_options
 
-    friend_ids          => 0,
-    cache_file          => 0,
-    html                => 0,
-    browser             => 0,
-    exclude_my_friends  => { default => 0 },
-    interactive         => { default => 1 },
-    noisy               => { default => 1 },
-    max_count           => { default => 0 },
+Override this method to allow additional options to be passed to
+"new".  You should also provide accessor methods for them.
+These are parsed by Params::Validate.  In breif, setting an
+option to "0" means it's optional, "1" means it's required.
+See Params::Validate for more info. It looks like this:
 
-};
+    sub default_options {
+    
+        $self->{default_options} = {
+            friend_ids          => 0,
+            cache_file          => 0,
+            html                => 0,
+            browser             => 0,
+            exclude_my_friends  => { default => 0 },
+            interactive         => { default => 1 },
+            noisy               => { default => 1 },
+            max_count           => { default => 0 },
+        };
+        
+        return $self->{default_options};
+    }
+
+    # So to add a "questions" option that's mandatory:
+
+    sub default_options {
+        super;
+        $self->{default_options}->{questions}=1;
+        return $self->{default_options};
+    }
+
+=cut
+
+sub default_options {
+
+    $self->{default_options} = {
+        friend_ids          => 0,
+        cache_file          => 0,
+        html                => 0,
+        browser             => 0,
+        exclude_my_friends  => { default => 0 },
+        interactive         => { default => 1 },
+        noisy               => { default => 1 },
+        max_count           => { default => 0 },
+    };
+    
+    return $self->{default_options};
+}
 
 
 =head2 friend_ids
