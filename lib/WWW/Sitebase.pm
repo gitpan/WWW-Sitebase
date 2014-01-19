@@ -1,5 +1,3 @@
-# $Id: Sitebase.pm,v 1.10 2009/08/10 09:28:39 grant Exp $
-
 package WWW::Sitebase;
 
 use Spiffy -Base;
@@ -14,15 +12,13 @@ WWW::Sitebase - Base class for Perl modules
 
 =head1 VERSION
 
-Version 0.9
+Version 0.10
 
 =cut
 
-our $VERSION = '0.9';
+our $VERSION = '0.10';
 
 =head1 SYNOPSIS
-
-(Derived from WWW::Myspace::MyBase 0.3)
 
 This is a base class that can be used for all Perl modules.
 I could probably call it "Base" or somesuch, but that's a bit
@@ -30,9 +26,14 @@ too presumptious for my taste, so I just included it here.
 You'll probably just use WWW::Sitebase::Navigator or WWW::Sitebase::Poster
 instead, which subclass WWW::Sitebase.
 WWW::Sitebase provides basic, standardized options parsing
-in several formats. It validates data using Params::Validate.
+in several formats. It validates data using Params::Validate, provides clean
+OO programming using Spiffy, and reads config files using Config::General.
+It gives your module a powerful "new" method that automatically
+takes any fields your module supports as arguments or reads them from a
+config file.  It also provides your module with "save" and "load" methods.
 
-To use this in your new module, you simply subclass this module, add
+
+To use this to write your new module, you simply subclass this module, add
 the "default_options" method to define your data, and write your methods.
 
  package WWW::MySite::MyModule;
@@ -57,6 +58,17 @@ the "default_options" method to define your data, and write your methods.
  or
  
  $object = new WWW::MySite::MyModule( { happiness => 5 } );
+ 
+ They can save their object to disk:
+ $object->save( $filename );
+ 
+ And read it back:
+ $object = new WWW::MySite::MyModule();
+ $object->load( $filename );
+ 
+ or since "save" writes a YAML file:
+ $object = new WWW::MySite::MyModule(
+    'config_file' => $filename, 'config_file_format' => 'YAML' );
 
 See Params::Validate for more info on the format of, and available
 parsing stunts available in, default_options.
@@ -416,8 +428,8 @@ Grant Grueninger, C<< <grantg at cpan.org> >>
 =head1 BUGS
 
 Please report any bugs or feature requests to
-C<bug-www-bebo at rt.cpan.org>, or through the web interface at
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=WWW-Bebo>.
+C<bug-www-Sitebase at rt.cpan.org>, or through the web interface at
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=WWW-Sitebase>.
 I will be notified, and then you'll automatically be notified of progress on
 your bug as I make changes.
 
@@ -435,7 +447,7 @@ We probably want to include cache_dir and possibile cache_file methods here.
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc WWW::Bebo::Base
+    perldoc WWW::Sitebase
 
 You can also look for information at:
 
@@ -443,19 +455,19 @@ You can also look for information at:
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
-L<http://annocpan.org/dist/WWW-Bebo>
+L<http://annocpan.org/dist/WWW-Sitebase>
 
 =item * CPAN Ratings
 
-L<http://cpanratings.perl.org/d/WWW-Bebo>
+L<http://cpanratings.perl.org/d/WWW-Sitebase>
 
 =item * RT: CPAN's request tracker
 
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=WWW-Bebo>
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=WWW-Sitebase>
 
 =item * Search CPAN
 
-L<http://search.cpan.org/dist/WWW-Bebo>
+L<http://search.cpan.org/dist/WWW-Sitebase>
 
 =back
 
@@ -463,11 +475,11 @@ L<http://search.cpan.org/dist/WWW-Bebo>
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2005 Grant Grueninger, all rights reserved.
+Copyright 2005, 2014 Grant Grueninger, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
 =cut
 
-1; # End of WWW::Bebo::Base
+1; # End of WWW::Sitebase

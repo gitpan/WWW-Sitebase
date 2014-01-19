@@ -1,4 +1,4 @@
-# $Id: Poster.pm,v 1.5 2007/08/02 09:06:25 grant Exp $
+# $Id: Poster.pm,v 1.1 2013/12/22 05:33:16 grant Exp $
 
 package WWW::Sitebase::Poster;
 

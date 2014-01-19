@@ -1,9 +1,22 @@
 Revision history for WWW::Sitebase
 
-0.09    2009-08-10
+0.10    2014-01-18
+        - Added Mozilla::CA prerequisite so that SSL works with
+          LWP::UserAgent 6.0 defaults.
+        - Changed "agent" setting in WWW::Sitebase::Navigator to report
+          the browser as Safari running on MacOS 10.9.1.
+        - When checking pages against regexps, WWW::Sitebase::Navigator
+          now uses /ism instead of /i as the flags.  This means a regexp
+          like "Sign Out.*My Accounts" will properly return true if the
+          page contains "Sign Out" on one line and "My Accounts" on another.
+
+0.09    2009-09-02
         - Improved handling of default_options to allow sub-classes
           more flexibility and backwards-compatibility when
           adding options.
+        - Fixed examples in docs in Sitebase::Navigator to refer to
+          using decoded_content instead of content method.
+        - Fixed some Sitebase::Navigator docs that referred to Bebo.
 
 0.08    2009-08-10
         - Fixed handling and documentation of default_options

@@ -1,22 +1,31 @@
---- #YAML:1.0
-name:                WWW-Sitebase
-version:             0.9
-abstract:            Base class for Perl modules
-license:             ~
-author:              
-    - Grant Grueninger <grantg@cpan.org>
-generated_by:        ExtUtils::MakeMaker version 6.44
-distribution_type:   module
-requires:     
-    Config::General:               0
-    File::Spec::Functions:         0
-    IO::Prompt:                    0
-    List::Compare:                 0
-    Params::Validate:              0
-    Spiffy:                        0.24
-    Test::More:                    0
-    WWW::Mechanize:                1.2
-    YAML:                          0.39
+---
+abstract: 'Base class for Perl modules'
+author:
+  - 'Grant Grueninger <grantg@cpan.org>'
+build_requires:
+  ExtUtils::MakeMaker: 0
+configure_requires:
+  ExtUtils::MakeMaker: 0
+dynamic_config: 1
+generated_by: 'ExtUtils::MakeMaker version 6.6302, CPAN::Meta::Converter version 2.120921'
+license: unknown
 meta-spec:
-    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
-    version: 1.3
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: WWW-Sitebase
+no_index:
+  directory:
+    - t
+    - inc
+requires:
+  Config::General: 0
+  File::Spec::Functions: 0
+  IO::Prompt: 0
+  List::Compare: 0
+  Mozilla::CA: 20130114
+  Params::Validate: 0
+  Spiffy: 0.24
+  Test::More: 0
+  WWW::Mechanize: 1.2
+  YAML: 0.39
+version: 0.10

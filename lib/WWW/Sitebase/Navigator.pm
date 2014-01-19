@@ -13,11 +13,11 @@ WWW::Sitebase::Navigator - Base class for modules that navigate web sites
 
 =head1 VERSION
 
-Version 0.05
+Version 0.06
 
 =cut
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 =head1 SYNOPSIS
 
@@ -579,7 +579,10 @@ sub _new_mech {
     # Set up our web browser (WWW::Mechanize object)
     $self->mech( new WWW::Mechanize(
                  onerror => undef,
-                 agent => 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)',
+                 # We'll say we're Safari running on MacOS 10.9.1
+                 agent => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1)'
+                    . ' AppleWebKit/537.73.11 (KHTML, like Gecko) Version/7.0.1'
+                    . ' Safari/537.73.11',
                  stack_depth => 1,
                  quiet => 1,
                ) );
@@ -729,7 +732,7 @@ field 'error' => 0;
 =head2 current_page
 
 Returns a reference to an HTTP::Response object that contains the last page
-retreived by the WWW::Bebo object. All methods (i.e. get_page, post_comment,
+retreived by the WWW::Sitebase::Navigator object. All methods (i.e. get_page, post_comment,
 get_profile, etc) set this value.
 
 EXAMPLE
@@ -739,7 +742,7 @@ The following will print the content of the user's profile page:
     use WWW::Bebo;
     my $bebo = new WWW::Bebo;
     
-    print $site->current_page->content;
+    print $site->current_page->decoded_content;
 
 =cut
 
@@ -753,7 +756,7 @@ sub current_page {
 
 The internal WWW::Mechanize object.  Use at your own risk: I don't
 promose this method will stay here or work the same in the future.
-The internal methods used to access Bebo are subject to change at
+The internal methods used to access sites are subject to change at
 any time, including using something different than WWW::Mechanize.
 
 =cut
@@ -978,7 +981,7 @@ sub _page_ok {
         # If they gave us a RE with which to verify the page, look for it.
         if ( $regexp ) {
             # Page must match the regexp
-            unless ( $page =~ /$regexp/i ) {
+            unless ( $page =~ /$regexp/ism ) {
                 $page_ok = 0;
                 $self->error("Page doesn't match verification pattern.");
 #                warn "Page doesn't match verification pattern.\n";
@@ -989,7 +992,7 @@ sub _page_ok {
             if ( defined $self->site_info->{'error_regexs'} ) {
                 $errors = $self->site_info->{'error_regexs'};
                 foreach my $error_regex ( @{$errors} ) {
-                    if ( $page =~ /$error_regex/i ) {
+                    if ( $page =~ /$error_regex/ism ) {
                         $page_ok = 0;
                         $self->error( "Got error page." );
 #                        warn "Got error page.\n";
@@ -1086,8 +1089,7 @@ until it matches. See get_page for more info.
 
 "re2" is an optional RE that will me used to make sure that the
 post was successful. USE THIS CAREFULLY! If your RE breaks, you could
-end up repeatedly posting a form. This is used by post_comemnts to make
-sure that the Verify Comment page is actually shown.
+end up repeatedly posting a form.
 
 "action" is the post action for the form, as in:
 
@@ -1098,7 +1100,7 @@ form actions with Javascript then post them without clicking form buttons.
 
 EXAMPLE
 
-This is how post_comment actually posts the comment:
+This is how WWW::Myspace's post_comment method posted a comment:
 
     # Submit the comment to $friend_id's page
     $self->submit_form( "${VIEW_COMMENT_FORM}${friend_id}", 1, "submit",
@@ -1192,7 +1194,7 @@ sub submit_form {
             if ( $options{'button'} ) {
                 $res = $self->mech->request( $f->click( $options{'button'} ) );
             } elsif ( $options{'no_click'} ) {
-                # We use make_request because Myspace likes submitting forms
+                # We use make_request because some sites like submitting forms
                 # that have buttons by using Javascript. make_request submits
                 # the form without clicking anything, whereas "click" clicks
                 # the first button, which can break things.
